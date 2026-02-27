@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Version: 2.1 - Updated recommendations, expertise, and work sections -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmed Aden — Systems-Driven Experimenter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --cream-dark: #EDE6D6;
+    --terracotta: #C4623A;
+    --terracotta-light: #D4795A;
+    --terracotta-pale: #F0D5C8;
+    --sage: #6B7F5E;
+    --sage-light: #8A9E7A;
+    --sage-pale: #D4DFD0;
+    --charcoal: #2C2C2A;
+    --warm-grey: #6B6760;
+    --sand: #B8A898;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 1000;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 128px 128px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245, 240, 232, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(184, 168, 152, 0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--terracotta); }
+
+  /* Hamburger menu */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 101;
+  }
+
+  .hamburger span {
+    width: 24px;
+    height: 2px;
+    background: var(--charcoal);
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--cream);
+    border-left: 1px solid var(--sand);
+    padding: 6rem 2rem 2rem;
+    transition: right 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    z-index: 100;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+  }
+
+  .mobile-menu.active {
+    right: 0;
+  }
+
+  .mobile-menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .mobile-menu-links a {
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .mobile-menu-links a:hover {
+    color: var(--terracotta);
+  }
+
+  .mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(44, 42, 42, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    z-index: 99;
+  }
+
+  .mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem 4rem;
+    position: relative;
+    background: var(--cream);
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--terracotta);
+  }
+
+  .hero-descriptor {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--charcoal);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-bio {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--charcoal);
+    max-width: 440px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    font-weight: 400;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .hero-bio strong {
+    font-weight: 600;
+    color: var(--charcoal);
+  }
+
+  .hero-bio strong {
+    font-weight: 500;
+    color: var(--sage);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1s;
+  }
+
+  .stat-item {}
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--terracotta);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin-top: 0.25rem;
+    font-weight: 500;
+    opacity: 0.65;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+
+  .btn-primary {
+    background: var(--terracotta);
+    color: var(--cream);
+    padding: 0.9rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-primary:hover {
+    background: var(--terracotta-light);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--charcoal);
+    padding: 0.9rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border: 1.5px solid var(--sand);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--sage);
+    color: var(--sage);
+    transform: translateY(-2px);
+  }
+
+  /* Hero Right - Image area */
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--cream-dark);
+    opacity: 0;
+    animation: fadeIn 1.2s ease forwards 0.3s;
+  }
+
+  .hero-image-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 0;
+  }
+
+  /* Organic blob shape */
+  .hero-blob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    aspect-ratio: 1;
+    background: var(--terracotta-pale);
+    border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+    animation: blobMorph 8s ease-in-out infinite;
+  }
+
+  @keyframes blobMorph {
+    0%, 100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+    25% { border-radius: 40% 60% 30% 70% / 60% 40% 70% 30%; }
+    50% { border-radius: 70% 30% 50% 50% / 30% 70% 50% 50%; }
+    75% { border-radius: 30% 70% 60% 40% / 70% 30% 40% 60%; }
+  }
+
+  .hero-image-placeholder {
+    position: relative;
+    z-index: 2;
+    width: 80%;
+    aspect-ratio: 3/4;
+    background: linear-gradient(160deg, var(--sage-pale) 0%, var(--terracotta-pale) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-image-placeholder svg {
+    width: 60%;
+    opacity: 0.3;
+  }
+
+  /* Decorative elements */
+  .hero-ornament {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+    writing-mode: vertical-rl;
+    right: 2rem;
+    bottom: 4rem;
+    opacity: 0.5;
+  }
+
+  /* ABOUT SECTION - REDESIGNED */
+  .about {
+    padding: 0;
+    background: var(--cream);
+    overflow: hidden;
+  }
+
+  /* Pull quote banner */
+  .about-pullquote {
+    background: var(--terracotta);
+    padding: 5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-pullquote::before {
+    content: '"';
+    position: absolute;
+    top: -2rem;
+    left: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 20rem;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .pullquote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.35;
+    max-width: 900px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .pullquote-text em {
+    font-style: normal;
+    font-weight: 500;
+    background: rgba(255,255,255,0.18);
+    padding: 0 0.3em;
+  }
+
+  .pullquote-source {
+    margin-top: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.6);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* About body - two column */
+  .about-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 500px;
+  }
+
+  .about-story {
+    padding: 5rem 4rem;
+    background: var(--cream);
+    border-right: 1px solid var(--cream-dark);
+  }
+
+  .about-story .section-label {
+    margin-bottom: 2rem;
+  }
+
+  .about-story p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--charcoal);
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-story p strong {
+    font-weight: 600;
+    color: var(--terracotta);
+  }
+
+  /* About right - expertise list */
+  .about-expertise {
+    background: var(--cream-dark);
+    padding: 5rem 4rem;
+  }
+
+  .about-expertise .section-label {
+    margin-bottom: 2.5rem;
+  }
+
+  .expertise-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .expertise-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid rgba(184, 168, 152, 0.4);
+    cursor: default;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .expertise-item:first-child {
+    border-top: 1px solid rgba(184, 168, 152, 0.4);
+  }
+
+  .expertise-item::before {
+    content: '';
+    position: absolute;
+    left: -4rem;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--terracotta);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: top;
+  }
+
+  .expertise-item:hover::before {
+    transform: scaleY(1);
+  }
+
+  .expertise-item:hover {
+    padding-left: 0.5rem;
+  }
+
+  .expertise-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--terracotta);
+    letter-spacing: 0.1em;
+    min-width: 2rem;
+    padding-top: 0.2rem;
+    opacity: 0.7;
+  }
+
+  .expertise-content {}
+
+  .expertise-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.01em;
+  }
+
+  .expertise-tools {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--warm-grey);
+    letter-spacing: 0.06em;
+  }
+
+  /* About bottom - full width numbers bar */
+  .about-numbers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--charcoal);
+  }
+
+  .about-number-item {
+    padding: 3.5rem 3rem;
+    border-right: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+
+  .about-number-item:last-child { border-right: none; }
+
+  .about-number-item:hover {
+    background: rgba(255,255,255,0.03);
+  }
+
+  .about-number-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--terracotta);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    transform-origin: left;
+  }
+
+  .about-number-item:hover::after {
+    transform: scaleX(1);
+  }
+
+  .about-big-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    font-weight: 500;
+    color: var(--terracotta-light);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-number-desc {
+    font-size: 0.8rem;
+    color: rgba(245,240,232,0.55);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+
+  /* WORK SECTION */
+  .work {
+    padding: 8rem 4rem;
+    background: var(--charcoal);
+    color: var(--cream);
+  }
+
+  .work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+
+  .work-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .work-header h2 em {
+    font-style: italic;
+    color: var(--terracotta-light);
+  }
+
+  .work-header .section-label {
+    color: var(--terracotta-light);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .work-card {
+    background: var(--charcoal);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.4s ease;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .work-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--terracotta);
+    transition: height 0.4s ease;
+  }
+
+  .work-card:hover { background: rgba(255,255,255,0.03); }
+  .work-card:hover::before { height: 100%; }
+
+  .card-index {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--warm-grey);
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    background: rgba(196, 98, 58, 0.15);
+    color: var(--terracotta-light);
+    margin-bottom: 1.2rem;
+    border: 1px solid rgba(196, 98, 58, 0.3);
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    color: var(--cream);
+  }
+
+  .card-summary {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: rgba(245, 240, 232, 0.78);
+    margin-bottom: 2rem;
+  }
+
+  .card-metric {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--terracotta-light);
+    margin-bottom: 0.2rem;
+  }
+
+  .card-metric-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+  }
+
+  .card-link {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    color: var(--warm-grey);
+  }
+
+  .work-card:hover .card-link {
+    border-color: var(--terracotta);
+    color: var(--terracotta);
+    transform: rotate(45deg);
+  }
+
+  /* RECOMMENDATIONS */
+  .recommendations {
+    padding: 8rem 4rem;
+    overflow: hidden;
+  }
+
+  .rec-header {
+    margin-bottom: 4rem;
+  }
+
+  .rec-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .rec-header h2 em {
+    font-style: italic;
+    color: var(--terracotta);
+  }
+
+  .recs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .rec-card {
+    background: var(--cream-dark);
+    padding: 2.5rem;
+    border: 1px solid rgba(184, 168, 152, 0.3);
+    position: relative;
+  }
+
+  .rec-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: var(--terracotta-pale);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+  }
+
+  .rec-text {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--charcoal);
+    margin-bottom: 2rem;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .rec-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .rec-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--sage-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    color: var(--sage);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .rec-author-info {}
+
+  .rec-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+
+  .rec-role {
+    font-size: 0.75rem;
+    color: var(--warm-grey);
+    letter-spacing: 0.04em;
+  }
+
+  /* BOOKING SECTION */
+  .booking {
+    padding: 8rem 4rem;
+    background: var(--sage);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .booking::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -10%;
+    width: 60%;
+    aspect-ratio: 1;
+    background: rgba(255,255,255,0.04);
+    border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+    animation: blobMorph 10s ease-in-out infinite reverse;
+  }
+
+  .booking-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .booking-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+  }
+
+  .booking-left h2 em {
+    font-style: italic;
+    color: var(--terracotta-pale);
+  }
+
+  .booking-left p {
+    font-size: 1rem;
+    line-height: 1.8;
+    opacity: 0.92;
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+
+  .booking-left .section-label {
+    color: var(--terracotta-pale);
+  }
+
+  .booking-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .booking-option {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .booking-option:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: var(--terracotta-pale);
+    transform: translateX(8px);
+  }
+
+  .booking-option-left {}
+
+  .option-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta-pale);
+    margin-bottom: 0.3rem;
+  }
+
+  .option-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+
+  .option-duration {
+    font-size: 0.75rem;
+    opacity: 0.75;
+    letter-spacing: 0.06em;
+  }
+
+  .option-arrow {
+    font-size: 1rem;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+
+  .booking-option:hover .option-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 4rem;
+    background: var(--charcoal);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    opacity: 0.7;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-links a:hover { color: var(--terracotta-light); }
+
+  /* Divider line with ornament */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 4rem;
+    margin: 0;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--cream-dark);
+  }
+
+  .divider-ornament {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--sand);
+    font-style: italic;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 1.8s;
+  }
+
+  .scroll-line {
+    width: 2px;
+    height: 40px;
+    background: var(--sand);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--terracotta);
+    animation: scrollDown 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollDown {
+    0% { top: -100%; }
+    100% { top: 100%; }
+  }
+
+  .scroll-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+    writing-mode: vertical-rl;
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-tag, .hero-name, .hero-descriptor, 
+    .hero-bio, .hero-stats, .hero-cta, .hero-right { 
+      animation: none !important; 
+      opacity: 1 !important; 
+      transform: none !important; 
+    }
+    .hero-blob { animation: none !important; }
+    * { scroll-behavior: auto !important; }
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 7rem 2rem 3rem; background: var(--cream); }
+    .hero-right { height: 50vw; }
+    .scroll-indicator { display: none; }
+
+    .about-pullquote { padding: 3rem 2rem; }
+    .pullquote-text { font-size: 1.3rem; }
+    .about-body { grid-template-columns: 1fr; }
+    .about-story { padding: 3rem 2rem; border-right: none; border-bottom: 1px solid var(--cream-dark); }
+    .about-expertise { padding: 3rem 2rem; }
+    .about-numbers { grid-template-columns: 1fr 1fr; }
+    .about-number-item { padding: 2.5rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .expertise-item::before { left: -2rem; }
+    .work { padding: 4rem 2rem; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+    .recommendations { padding: 4rem 2rem; }
+    .recs-grid { grid-template-columns: 1fr; }
+
+    .booking { padding: 4rem 2rem; }
+    .booking-inner { grid-template-columns: 1fr; gap: 3rem; }
+
+    footer { flex-direction: column; gap: 1.5rem; padding: 2rem; text-align: center; }
+    .section-divider { padding: 0 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Ahmed Aden</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#recommendations">Recommendations</a></li>
+    <li><a href="#booking">Let's Talk</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <ul class="mobile-menu-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#recommendations">Recommendations</a></li>
+    <li><a href="#booking">Let's Talk</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Systems-Driven Experimenter</p>
+    <h1 class="hero-name">Ahmed<br><em>Aden</em></h1>
+    <p class="hero-descriptor">CRO & Experimentation Strategist</p>
+    <p class="hero-bio">
+      I build experimentation programs and analytics infrastructure that turn data into measurable business impact. Most teams struggle because they lack the foundations — frameworks, AI infrastructure, statistical rigor — that make high velocity sustainable. I've built these systems twice: once scaling an existing program to 300+ annual tests, once from scratch.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number">300+</div>
+        <div class="stat-label">Annual tests — top 10%</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">£1.5m</div>
+        <div class="stat-label">Incremental revenue</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">+31%</div>
+        <div class="stat-label">Success rate lift</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#booking" class="btn-primary">Book a call →</a>
+      <a href="#work" class="btn-secondary">See my work</a>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">Scroll</span>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-blob"></div>
+    <div class="hero-image-container">
+      <div class="hero-image-placeholder">
+        <!-- Replace with actual photo: <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="35" r="20" stroke="#C4623A" stroke-width="1.5"/>
+          <path d="M15 90 C15 65 85 65 85 90" stroke="#C4623A" stroke-width="1.5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="hero-ornament">Sykes Cottages · Penny Appeal · 5+ Years</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+
+  <!-- Pull quote banner -->
+  <div class="about-pullquote reveal">
+    <p class="pullquote-text">
+      Data without action is noise. Action without data is gambling. I build the systems that turn <em>insights into measurable business outcomes</em> — through experimentation, analytics, and AI.
+    </p>
+    <p class="pullquote-source">/ Ahmed Aden — CRO & Experimentation Strategist</p>
+  </div>
+
+  <!-- Story + Expertise -->
+  <div class="about-body">
+    <div class="about-story reveal">
+      <p class="section-label">/ How I Work</p>
+      
+      <p><strong>Why teams struggle with data</strong></p>
+      <p>
+        Most teams struggle not because they lack data, but because insights don't drive action. Experimentation programs stall without proper foundations. Analytics sit in dashboards while decisions get made on gut instinct. User behavior goes unanalyzed. The gap between "we have data" and "we act on data" kills velocity.
+      </p>
+      
+      <p><strong>The systems I build</strong></p>
+      <p>
+        Whether through experimentation, behavioral analysis, or product insights — I build infrastructure that makes data actionable: <strong>AI removes bottlenecks</strong> (insight synthesis from 7 days to 20 minutes, automated reporting, natural language querying), <strong>analytics reveals patterns</strong> (user intent analysis, keyword mapping, funnel diagnostics), and <strong>frameworks ensure rigor</strong> (statistical guardrails, evidence-based prioritization, systematic decision-making). This is how you turn 300+ annual tests into compounding knowledge, or £500k revenue from a single behavioral insight.
+      </p>
+      
+      <p><strong>What you get</strong></p>
+      <p>
+        You get systems where data drives decisions, not decorates them. Experimentation velocity becomes learning speed. Analytics uncovers revenue opportunities. And every insight compounds institutional knowledge instead of disappearing into spreadsheets. I've proven this across experimentation programs, product analytics, and AI infrastructure.
+      </p>
+    </div>
+
+    <div class="about-expertise reveal">
+      <p class="section-label">/ What I Solve</p>
+      <div class="expertise-list">
+        <div class="expertise-item">
+          <span class="expertise-icon">01</span>
+          <div class="expertise-content">
+            <div class="expertise-name">Insights Don't Drive Decisions</div>
+            <div class="expertise-tools">Built AI systems turning 7-day manual searches into 20-minute queries across 1,200+ experiments</div>
+          </div>
+        </div>
+        <div class="expertise-item">
+          <span class="expertise-icon">02</span>
+          <div class="expertise-content">
+            <div class="expertise-name">User Behavior Goes Unanalyzed</div>
+            <div class="expertise-tools">Keyword intent analysis, funnel diagnostics, behavioral mapping that uncovered £500k revenue opportunity</div>
+          </div>
+        </div>
+        <div class="expertise-item">
+          <span class="expertise-icon">03</span>
+          <div class="expertise-content">
+            <div class="expertise-name">Low Test Velocity & Poor Prioritization</div>
+            <div class="expertise-tools">Scaled to 300+ annual tests (top 10%) through evidence-based frameworks and AI-powered ideation support</div>
+          </div>
+        </div>
+        <div class="expertise-item">
+          <span class="expertise-icon">04</span>
+          <div class="expertise-content">
+            <div class="expertise-name">Slow Time-to-Insight</div>
+            <div class="expertise-tools">Conversational AI synthesizing 1,200+ experiments enabling natural language queries with cited reports</div>
+          </div>
+        </div>
+        <div class="expertise-item">
+          <span class="expertise-icon">05</span>
+          <div class="expertise-content">
+            <div class="expertise-name">Weak Data & Attribution Foundations</div>
+            <div class="expertise-tools">GA4/GTM tracking infrastructure, Tableau dashboards, automated funnel metrics connecting tests to revenue</div>
+          </div>
+        </div>
+        <div class="expertise-item">
+          <span class="expertise-icon">06</span>
+          <div class="expertise-content">
+            <div class="expertise-name">Cross-Functional Friction & Data Silos</div>
+            <div class="expertise-tools">Automated reporting to 20+ stakeholders eliminating peeking effect and manual status-checking overhead</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA after What I Solve -->
+  <div style="text-align: center; padding: 3rem 4rem 0;">
+    <p style="font-size: 0.9rem; color: var(--charcoal); margin-bottom: 1.5rem;">See the systems in action →</p>
+  </div>
+
+  <!-- Numbers bar -->
+  <div class="about-numbers">
+    <div class="about-number-item reveal">
+      <div class="about-big-number">300+</div>
+      <div class="about-number-desc">Annual experiments (top 10% industry velocity)</div>
+    </div>
+    <div class="about-number-item reveal">
+      <div class="about-big-number">£1.5m</div>
+      <div class="about-number-desc">Incremental revenue attributed to experimentation program</div>
+    </div>
+    <div class="about-number-item reveal">
+      <div class="about-big-number">+31%</div>
+      <div class="about-number-desc">Success rate improvement through smarter prioritization</div>
+    </div>
+    <div class="about-number-item reveal">
+      <div class="about-big-number">7d→20m</div>
+      <div class="about-number-desc">Insight discovery time reduced by AI-powered systems</div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="work-header reveal">
+    <div>
+      <p class="section-label">/ Proof</p>
+      <h2>Systems built.<br><em>Problems solved.</em></h2>
+    </div>
+  </div>
+
+  <div class="work-grid">
+    <a href="#" class="work-card reveal">
+      <div class="card-index">01</div>
+      <div class="card-tag">AI Infrastructure</div>
+      <h3 class="card-title">AI-Powered Insight Hub</h3>
+      <p class="card-summary">Teams spent 7+ days manually searching for "did we test this before?" across Slack, spreadsheets, and old decks. Built conversational AI synthesizing 1200+ experiments and 200 research studies. Discovery time dropped from 7 days to 20 minutes — teams stopped re-testing old ideas.</p>
+      <div class="card-metric">7 days → 20min</div>
+      <div class="card-metric-label">Insight discovery time</div>
+      <div class="card-link">↗</div>
+    </a>
+
+    <a href="#" class="work-card reveal">
+      <div class="card-index">02</div>
+      <div class="card-tag">Scaling Programs</div>
+      <h3 class="card-title">Scaling Experimentation at Sykes</h3>
+      <p class="card-summary">Built three interconnected systems: Momentum Framework (evidence-based ideation improving success rate 31%), Pre-Decision Analysis (eliminated 3-5 day delays), AI infrastructure + automated reporting (scaled to 300+ tests across 5 squads). Result: £1.5m incremental revenue, sustainable top-10% velocity, peeking effect eliminated.</p>
+      <div class="card-metric">£1.5m</div>
+      <div class="card-metric-label">Incremental revenue generated</div>
+      <div class="card-link">↗</div>
+    </a>
+
+    <a href="#" class="work-card reveal">
+      <div class="card-index">03</div>
+      <div class="card-tag">0→1 Programs</div>
+      <h3 class="card-title">Built Sister Brand Program From Scratch</h3>
+      <p class="card-summary">Sister brand: 2 years of flat/negative conversion, no CRO program. Conducted full audit, ran exclusion tests to identify what users valued vs. noise, held stakeholder workshops that gave teams ownership. Built ground-up program with AI infrastructure, frameworks, statistical guardrails. Achieved 21% conversion rate increase and 23% success rate improvement over tenure.</p>
+      <div class="card-metric">21%</div>
+      <div class="card-metric-label">Conversion rate increase</div>
+      <div class="card-link">↗</div>
+    </a>
+
+    <a href="#" class="work-card reveal">
+      <div class="card-index">04</div>
+      <div class="card-tag">Product Analytics</div>
+      <h3 class="card-title">User Intent Analysis → £500k Revenue</h3>
+      <p class="card-summary">Fundraising page underperforming with high bounce rate. Analyzed keyword data, mapped themes to behavior, identified intent mismatch: users searching "sadaqah" (one-off giving) landed on "Sadaqah Jariyah" (long-term projects). Built dedicated page matching user intent. Generated £500k+ donations, became 2nd highest converting page out of 18.</p>
+      <div class="card-metric">£500k+</div>
+      <div class="card-metric-label">Revenue from behavioral insight</div>
+      <div class="card-link">↗</div>
+    </a>
+  </div>
+</section>
+
+<!-- RECOMMENDATIONS -->
+<section class="recommendations" id="recommendations">
+  <div class="rec-header reveal">
+    <p class="section-label">/ Recommendations</p>
+    <h2>What colleagues<br><em>say</em></h2>
+  </div>
+
+  <div class="recs-grid">
+
+    <div class="rec-card reveal">
+      <div class="rec-quote">"</div>
+      <p class="rec-text">Ahmed truly stands out with the level of rigour and attention to detail he brings to his work. He doesn't just run experiments—he ensures the strategies behind them are robust, well-documented, and deeply insightful. His communication is equally impressive, always clear, thorough, and easy to understand. Ahmed's ability to balance precision with accessibility has made a real impact on the way we approach CRO.</p>
+      <div class="rec-author">
+        <div class="rec-avatar">SK</div>
+        <div class="rec-author-info">
+          <div class="rec-name">Steph Kelly</div>
+          <div class="rec-role">Digital Content Manager · LinkedIn</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rec-card reveal">
+      <div class="rec-quote">"</div>
+      <p class="rec-text">I truly have valued Ahmed's wisdom and expertise over the last five years. He brings exceptional analytical and CRO expertise to any team he is on part of and his depth of knowledge provides real value. He is a team player and collaborates well with others in solving complex business problems and is someone I can trust to deliver any task. He always brings his unique combination of skills into his work, someone who valuable asset to have in a team.</p>
+      <div class="rec-author">
+        <div class="rec-avatar">LB</div>
+        <div class="rec-author-info">
+          <div class="rec-name">Lauren Betteridge</div>
+          <div class="rec-role">Digital Marketing Executive · LinkedIn</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-divider">
+  <div class="divider-line"></div>
+  <span class="divider-ornament">✦</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="booking-inner">
+    <div class="booking-left reveal">
+      <p class="section-label">/ Let's Talk</p>
+      <h2>Book 30 minutes —<br><em>Let's discuss your program</em></h2>
+      <p>Whether you're hiring for a CRO role, exploring a consulting project, or just want to discuss experimentation and AI — I'm open to conversations.</p>
+      <p style="font-size: 0.85rem; opacity: 0.7; margin-top: 1.5rem;">I work with in-house experimentation teams looking to scale velocity while maintaining quality. If that's you, let's talk.</p>
+    </div>
+    <div class="booking-options reveal">
+      <a href="https://calendly.com/your-link" class="booking-option">
+        <div class="booking-option-left">
+          <div class="option-type">30 Minutes</div>
+          <div class="option-title">General Conversation</div>
+          <div class="option-duration">Discuss opportunities to collaborate — role, consulting, or advisory</div>
+        </div>
+        <div class="option-arrow">→</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">Ahmed Aden © 2026</div>
+  <div class="footer-links">
+    <a href="/cdn-cgi/l/email-protection#dabb85bbbebfb4ebed9ab2b5aeb7bbb3b6f4b9b5b7">Email</a>
+    <a href="https://linkedin.com/in/ahmedaden" target="_blank">LinkedIn</a>
+    <a href="#">CV</a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Mobile menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+  const mobileLinks = document.querySelectorAll('.mobile-menu-links a');
+
+  function toggleMobileMenu() {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    mobileOverlay.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+  }
+
+  hamburger.addEventListener('click', toggleMobileMenu);
+  mobileOverlay.addEventListener('click', toggleMobileMenu);
+  
+  // Close menu when clicking a link
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      mobileOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Scroll reveal - animate in from slightly below, but never hide content
+  const revealEls = document.querySelectorAll('.reveal');
+  
+  // Only animate if user hasn't reduced motion
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (!prefersReduced) {
+    revealEls.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+    });
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }, i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    
+    revealEls.forEach(el => observer.observe(el));
+  }
+</script>
+
+</body>
+</html>

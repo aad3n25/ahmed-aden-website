@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Version: 2.1 - Case Study: Building CRO Programme From Scratch -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building CRO Programme From Scratch — Ahmed Aden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --cream-dark: #EDE6D6;
+    --terracotta: #C4623A;
+    --terracotta-light: #D4795A;
+    --terracotta-pale: #F0D5C8;
+    --sage: #6B7F5E;
+    --sage-light: #8A9E7A;
+    --sage-pale: #D4DFD0;
+    --charcoal: #2C2C2A;
+    --warm-grey: #6B6760;
+    --sand: #B8A898;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 1000;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 128px 128px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245, 240, 232, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(184, 168, 152, 0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+
+  .back-link {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+  }
+
+  .back-link:hover {
+    opacity: 1;
+    color: var(--terracotta);
+  }
+
+  /* CASE STUDY HERO */
+  .cs-hero {
+    padding: 10rem 4rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .cs-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 2rem;
+  }
+
+  .cs-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .cs-subtitle {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--warm-grey);
+    margin-bottom: 3rem;
+  }
+
+  .cs-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--cream-dark);
+    border-bottom: 1px solid var(--cream-dark);
+    margin-bottom: 4rem;
+  }
+
+  .cs-stat-item {
+    text-align: center;
+  }
+
+  .cs-stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--terracotta);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .cs-stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+  }
+
+  /* CASE STUDY CONTENT */
+  .cs-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 4rem 6rem;
+  }
+
+  .cs-section {
+    margin-bottom: 4rem;
+  }
+
+  .cs-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    color: var(--charcoal);
+  }
+
+  .cs-content p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    margin-bottom: 1.5rem;
+    color: var(--charcoal);
+  }
+
+  .cs-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .cs-content strong {
+    font-weight: 500;
+    color: var(--terracotta);
+  }
+
+  .cs-content em {
+    font-style: italic;
+    color: var(--sage);
+  }
+
+  /* Highlight box */
+  .cs-highlight {
+    background: var(--cream-dark);
+    padding: 2rem;
+    border-left: 3px solid var(--terracotta);
+    margin: 2rem 0;
+  }
+
+  .cs-highlight p {
+    margin-bottom: 0;
+  }
+
+  /* Results grid */
+  .cs-results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .cs-result-item {
+    background: var(--cream-dark);
+    padding: 1.5rem;
+    border: 1px solid var(--sand);
+  }
+
+  .cs-result-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--terracotta);
+    margin-bottom: 0.5rem;
+  }
+
+  .cs-result-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--charcoal);
+  }
+
+  /* Tools list */
+  .cs-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1.5rem 0;
+  }
+
+  .cs-tool {
+    background: var(--sage-pale);
+    color: var(--sage);
+    padding: 0.4rem 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--sage-light);
+  }
+
+  /* CTA Section */
+  .cs-cta {
+    background: var(--terracotta);
+    padding: 4rem;
+    text-align: center;
+    margin-top: 4rem;
+  }
+
+  .cs-cta h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  .cs-cta-btn {
+    display: inline-block;
+    background: var(--cream);
+    color: var(--terracotta);
+    padding: 1rem 2.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .cs-cta-btn:hover {
+    background: var(--cream-dark);
+    transform: translateY(-2px);
+  }
+
+  /* Related case studies */
+  .cs-related {
+    max-width: 900px;
+    margin: 4rem auto;
+    padding: 0 4rem;
+  }
+
+  .cs-related-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cs-related-link {
+    display: block;
+    background: var(--cream-dark);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: var(--charcoal);
+    border: 1px solid var(--sand);
+    transition: all 0.3s ease;
+  }
+
+  .cs-related-link:hover {
+    border-color: var(--terracotta);
+    transform: translateX(8px);
+  }
+
+  .cs-related-link-title {
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+
+  .cs-related-link-desc {
+    font-size: 0.85rem;
+    color: var(--warm-grey);
+  }
+
+  /* Footer */
+  footer {
+    padding: 3rem 4rem;
+    background: var(--charcoal);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    opacity: 0.7;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-links a:hover { color: var(--terracotta-light); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .cs-hero { padding: 8rem 2rem 3rem; }
+    .cs-content { padding: 0 2rem 4rem; }
+    .cs-stats { grid-template-columns: 1fr; gap: 1.5rem; }
+    .cs-results-grid { grid-template-columns: 1fr; }
+    .cs-cta { padding: 3rem 2rem; }
+    .cs-related { padding: 0 2rem; }
+    footer { flex-direction: column; gap: 1.5rem; padding: 2rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="ahmed-aden.html" class="nav-logo">Ahmed Aden</a>
+  <a href="ahmed-aden.html#work" class="back-link">← Back to all work</a>
+</nav>
+
+<section class="cs-hero">
+  <p class="cs-meta">Sykes Cottages — Sister Brand · 2022–2023 · Programme Design, 0→1</p>
+  <h1 class="cs-title">Building a CRO Programme From Scratch</h1>
+  <p class="cs-subtitle">Designing and building an experimentation programme from zero — achieving 21% conversion rate increase through systematic audit, exclusion testing, and stakeholder co-creation</p>
+  
+  <div class="cs-stats">
+    <div class="cs-stat-item">
+      <div class="cs-stat-number">21%</div>
+      <div class="cs-stat-label">Conversion rate increase</div>
+    </div>
+    <div class="cs-stat-item">
+      <div class="cs-stat-number">23%</div>
+      <div class="cs-stat-label">Success rate improvement</div>
+    </div>
+    <div class="cs-stat-item">
+      <div class="cs-stat-number">0→1</div>
+      <div class="cs-stat-label">Programme built from zero</div>
+    </div>
+  </div>
+</section>
+
+<div class="cs-content">
+
+  <section class="cs-section">
+    <h2 class="cs-section-title">The Challenge</h2>
+    <p>Two years of flat or declining conversion performance. No structured CRO programme. No systematic approach to diagnosing or addressing conversion issues.</p>
+
+    <p>A sister brand within Sykes had been struggling with conversion for consecutive years — negative momentum compounding. The business knew something was wrong but had no structured way to diagnose what, no hypothesis-driven framework to prioritise fixes, and no testing infrastructure to validate solutions before full rollout.</p>
+
+    <p>The mandate was open-ended: design and build an experimentation programme from scratch. No existing process to inherit. No institutional memory of what good looked like. Just flatlined performance and a recognition that guesswork wasn't working.</p>
+
+    <div class="cs-highlight">
+      <p>The challenge wasn't just technical. A programme that the CRO team runs alone is brittle. A programme that stakeholders across product, design, and marketing actively champion is sustainable. The goal was the latter.</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <h2 class="cs-section-title">The Approach</h2>
+
+    <p>I worked in three phases, each building the evidence base for the next.</p>
+
+    <p><strong>Phase 1 — Understand Before Testing</strong></p>
+    <p>I started with a full website conversion audit — not a surface-level heuristic review, but a systematic mapping of funnel drop-off points, page-level friction patterns, and behavioural signals from session recordings and heatmaps. Cross-referenced these findings with existing experiment insights and UX research from the parent Sykes brand to formulate evidence-based hypotheses tailored to the sister brand context.</p>
+    <p>From this audit, I built an initial hypothesis backlog: a prioritised set of evidence-based problem statements ranked by likely impact and implementation complexity.</p>
+
+    <p><strong>Phase 2 — Exclusion Testing: Finding What Users Value</strong></p>
+    <p>Before building new experiences, I ran targeted exclusion tests. The logic: rather than immediately adding features or changing layouts, first understand what's essential by removing elements and observing user response.</p>
+    <p>Ran exclusion tests to determine areas of user sensitivity — identifying what users valued most (to double down on) and what was creating noise that, when removed, increased the visibility of what mattered.</p>
+    <p>This phase was diagnostic. Exclusion tests answered <em>'what's essential?'</em> before ideation tests answered <em>'what could we add?'</em> This sequencing prevented the common mistake of layering complexity onto an already unclear experience.</p>
+
+    <p><strong>Phase 3 — Stakeholder Workshops: Building Ownership, Not Just Ideas</strong></p>
+    <p>Once a growing library of live experiment data and early user behaviour signal was in place, I ran stakeholder ideation workshops — but these weren't brainstorming sessions starting from zero.</p>
+    <p>Before these sessions, two foundations were in place: a growing library of live experiment data giving early signal on user behaviour, and a structured ideation framework that encouraged creativity while anchoring assumptions in evidence. Stakeholders left these sessions with their names attached to experiments. When results came back, they felt ownership of outcomes because they'd been involved in framing the question, not just handed a conclusion.</p>
+
+    <div class="cs-tools">
+      <span class="cs-tool">Conversion Audit</span>
+      <span class="cs-tool">Session Recordings</span>
+      <span class="cs-tool">Heatmaps</span>
+      <span class="cs-tool">Exclusion Testing</span>
+      <span class="cs-tool">Stakeholder Workshops</span>
+      <span class="cs-tool">Hypothesis Framework</span>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <h2 class="cs-section-title">The Results</h2>
+
+    <div class="cs-results-grid">
+      <div class="cs-result-item">
+        <div class="cs-result-number">21%</div>
+        <div class="cs-result-desc">Conversion rate increase — compounding effect of successful experiments and low-value experiences removed</div>
+      </div>
+      <div class="cs-result-item">
+        <div class="cs-result-number">23%</div>
+        <div class="cs-result-desc">Success rate improvement over tenure</div>
+      </div>
+      <div class="cs-result-item">
+        <div class="cs-result-number">0→1</div>
+        <div class="cs-result-desc">End-to-end programme built from scratch: audit → hypothesis framework → test delivery infrastructure</div>
+      </div>
+      <div class="cs-result-item">
+        <div class="cs-result-number">Active</div>
+        <div class="cs-result-desc">Stakeholder buy-in achieved — champions embedded across product, design, and marketing</div>
+      </div>
+    </div>
+
+    <p>The 21% conversion rate increase was the compounding effect of multiple things working together: successful experiments shipping, low-value experiences being systematically removed, and the site experience becoming progressively clearer and more aligned with user intent.</p>
+
+    <p>The stakeholder outcome was equally important for long-term programme health. Stakeholders who participated in the evidence-gathering and ideation phases became active champions. When the programme needed resources or prioritisation support, they advocated for it because they felt ownership of the outcomes.</p>
+
+    <p>Key secondary outcomes: experimentation vocabulary, process, and shared definition of success established; programme scaled without proportional increase in CRO team headcount; framework made replicable for other sister brands.</p>
+  </section>
+
+  <section class="cs-section">
+    <h2 class="cs-section-title">What Made This Work</h2>
+
+    <p>Building a programme from scratch is a culture project as much as a technical one. The infrastructure (testing platform, analytics, frameworks) is necessary but not sufficient. The harder work is building the organisational muscle memory that treats experimentation as a default mode of decision-making rather than an optional extra.</p>
+
+    <p>The decision to run exclusion tests before ideation tests was the most important sequencing choice. It meant the first round of stakeholder workshops started from behavioural evidence about what users valued, not abstract opinions about what we thought they wanted. That credibility carried forward into all subsequent ideation sessions.</p>
+
+    <p>If I were to build this again, I'd set up stakeholder reporting infrastructure earlier in the process — even before the first tests launched. The act of receiving regular experiment updates (even if inconclusive at first) builds the habit of engaging with data-driven outcomes, which compounds over time into genuine cultural shift.</p>
+
+    <div class="cs-highlight">
+      <p><strong>Transferable principle:</strong> Don't build the programme you want. Build the programme the organisation is ready for. Start with evidence-gathering (audit, exclusion tests), then involve stakeholders in hypothesis generation once they've seen that user behaviour can contradict assumptions. Ownership follows evidence, not vice versa.</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="cs-cta">
+  <h3>Want to build something similar?</h3>
+  <a href="ahmed-aden.html#booking" class="cs-cta-btn">Book a 30-minute conversation →</a>
+</div>
+
+<div class="cs-related">
+  <h3 class="cs-related-title">Related Case Studies</h3>
+  <a href="case-study-scaling-sykes.html" class="cs-related-link">
+    <div class="cs-related-link-title">Scaling Experimentation at Sykes</div>
+    <div class="cs-related-link-desc">Building systems that enabled 300+ annual tests with improving quality</div>
+  </a>
+  <a href="case-study-intent-analysis.html" class="cs-related-link">
+    <div class="cs-related-link-title">User Intent Analysis → £500k Revenue</div>
+    <div class="cs-related-link-desc">Behavioral analysis uncovering £500k revenue opportunity</div>
+  </a>
+</div>
+
+<footer>
+  <div class="footer-left">Ahmed Aden © 2026</div>
+  <div class="footer-links">
+    <a href="/cdn-cgi/l/email-protection#02635d6366676c3335426a6d766f636b6e2c616d6f">Email</a>
+    <a href="https://linkedin.com/in/ahmedaden" target="_blank">LinkedIn</a>
+    <a href="ahmed-aden.html">Ho

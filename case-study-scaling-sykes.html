@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Version: 2.1 - Case Study: Scaling Experimentation at Sykes -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scaling Experimentation at Sykes — Ahmed Aden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --cream-dark: #EDE6D6;
+    --terracotta: #C4623A;
+    --terracotta-light: #D4795A;
+    --terracotta-pale: #F0D5C8;
+    --sage: #6B7F5E;
+    --sage-light: #8A9E7A;
+    --sage-pale: #D4DFD0;
+    --charcoal: #2C2C2A;
+    --warm-grey: #6B6760;
+    --sand: #B8A898;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 1000;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 128px 128px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245, 240, 232, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(184, 168, 152, 0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+
+  .back-link {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+  }
+
+  .back-link:hover {
+    opacity: 1;
+    color: var(--terracotta);
+  }
+
+  /* CASE STUDY HERO */
+  .cs-hero {
+    padding: 10rem 4rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .cs-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 2rem;
+  }
+
+  .cs-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .cs-subtitle {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--warm-grey);
+    margin-bottom: 3rem;
+  }
+
+  .cs-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--cream-dark);
+    border-bottom: 1px solid var(--cream-dark);
+    margin-bottom: 4rem;
+  }
+
+  .cs-stat-item {
+    text-align: center;
+  }
+
+  .cs-stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--terracotta);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .cs-stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+  }
+
+  /* CASE STUDY CONTENT */
+  .cs-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 4rem 6rem;
+  }
+
+  .cs-section {
+    margin-bottom: 4rem;
+  }
+
+  .cs-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    color: var(--charcoal);
+  }
+
+  .cs-content p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    margin-bottom: 1.5rem;
+    color: var(--charcoal);
+  }
+
+  .cs-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .cs-content strong {
+    font-weight: 500;
+    color: var(--terracotta);
+  }
+
+  .cs-content em {
+    font-style: italic;
+    color: var(--sage);
+  }
+
+  /* Highlight box */
+  .cs-highlight {
+    background: var(--cream-dark);
+    padding: 2rem;
+    border-left: 3px solid var(--terracotta);
+    margin: 2rem 0;
+  }
+
+  .cs-highlight p {
+    margin-bottom: 0;
+  }
+
+  /* Results grid */
+  .cs-results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .cs-result-item {
+    background: var(--cream-dark);
+    padding: 1.5rem;
+    border: 1px solid var(--sand);
+  }
+
+  .cs-result-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--terracotta);
+    margin-bottom: 0.5rem;
+  }
+
+  .cs-result-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--charcoal);
+  }
+
+  /* Tools list */
+  .cs-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1.5rem 0;
+  }
+
+  .cs-tool {
+    background: var(--sage-pale);
+    color: var(--sage);
+    padding: 0.4rem 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--sage-light);
+  }
+
+  /* CTA Section */
+  .cs-cta {
+    background: var(--terracotta);
+    padding: 4rem;
+    text-align: center;
+    margin-top: 4rem;
+  }
+
+  .cs-cta h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  .cs-cta-btn {
+    display: inline-block;
+    background: var(--cream);
+    color: var(--terracotta);
+    padding: 1rem 2.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .cs-cta-btn:hover {
+    background: var(--cream-dark);
+    transform: translateY(-2px);
+  }
+
+  /* Related case studies */
+  .cs-related {
+    max-width: 900px;
+    margin: 4rem auto;
+    padding: 0 4rem;
+  }
+
+  .cs-related-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cs-related-link {
+    display: block;
+    background: var(--cream-dark);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: var(--charcoal);
+    border: 1px solid var(--sand);
+    transition: all 0.3s ease;
+  }
+
+  .cs-related-link:hover {
+    border-color: var(--terracotta);
+    transform: translateX(8px);
+  }
+
+  .cs-related-link-title {
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+
+  .cs-related-link-desc {
+    font-size: 0.85rem;
+    color: var(--warm-grey);
+  }
+
+  /* Footer */
+  footer {
+    padding: 3rem 4rem;
+    background: var(--charcoal);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    opacity: 0.7;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-links a:hover { color: var(--terracotta-light); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .cs-hero { padding: 8rem 2rem 3rem; }
+    .cs-content { padding: 0 2rem 4rem; }
+    .cs-stats { grid-template-columns: 1fr; gap: 1.5rem; }
+    .cs-results-grid { grid-template-columns: 1fr; }
+    .cs-cta { padding: 3rem 2rem; }
+    .cs-related { padding: 0 2rem; }
+    footer { flex-direction: column; gap: 1.5rem; padding: 2rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="ahmed-aden.html" class="nav-logo">Ahmed Aden</a>
+  <a href="ahmed-aden.html#work" class="back-link">← Back to all work</a>
+</nav>
+
+<section class="cs-hero">
+  <p class="cs-meta">Sykes Cottages · UK's Largest Holiday Let Agency · 2022–Present · Programme Design & Scaling</p>
+  <h1 class="cs-title">Scaling Experimentation at Sykes</h1>
+  <p class="cs-subtitle">Building three interconnected systems that enabled 300+ annual tests while improving quality — proving velocity and rigor can compound, not compete</p>
+  
+  <div class="cs-stats">
+    <div class="cs-stat-item">
+      <div class="cs-stat-number">300+</div>
+      <div class="cs-stat-label">Annual tests (top 10%)</div>
+    </div>
+    <div class="cs-stat-item">
+      <div class="cs-stat-number">+31%</div>
+      <div class="cs-stat-label">Success rate improvement</div>
+    </div>
+    <div class="cs-stat-item">
+      <div class="cs-stat-number">£1.5m</div>
+      <div class="cs-stat-label">Incremental revenue</div>
+    </div>
+  </div>
+</section>
+
+<div class="cs-content">
+
+  <section class="cs-section">
+    <h2 class="cs-section-title">The Challenge</h2>
+    <p>Velocity without foundations isn't a programme. It's a queue of bets.</p>
+
+    <p>When I joined Sykes, there was an active CRO programme in place — but it had stalled in a pattern common to many maturing teams. The ideas being generated were disconnected from evidence. Tests were running, but the programme wasn't learning fast enough from them: success rates had declined year-on-year, hypotheses lacked evidential grounding, and insights from completed tests weren't systematically feeding back into future ideation.</p>
+
+    <p>The team was doing the work but not building the compounding system that makes experimentation genuinely scalable — where each test makes the organisation smarter, not just busier.</p>
+
+    <div class="cs-highlight">
+      <p>The challenge I set myself: build the foundations that make high velocity sustainable — not as a trade-off against quality, but as a system where velocity and quality reinforce each other.</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <h2 class="cs-section-title">The Approach</h2>
+
+    <p>I worked across three interconnected layers — each building on the last.</p>
+
+    <p><strong>Layer 1 — Fixing How Ideas Were Generated: The Momentum Framework</strong></p>
+    <p>The root cause of declining success rates wasn't execution — it was ideation. Teams were jumping to solutions before understanding problems properly.</p>
+    <p>I designed the Momentum Framework — a structured two-session process separating evidence-building from ideation, preventing teams from jumping to solutions before problems were properly understood.</p>
+    <p>Session one was findings-first. Cross-functional participants from design, engineering, product, and marketing reviewed what we'd observed across UX research, experiment analysis, and business insights. From observations, teams drafted assumptions (why are we seeing this?) and early recommendations (how might we address it?). These inputs were combined into pending hypotheses — structured problem statements without solutions attached.</p>
+    <p>Session two was ideation. With evidential foundations already laid, participants could think creatively. The only guiding question: <em>'what would tell you your idea had worked?'</em> This anchored creativity to measurable outcomes. After each session, ideas were collated and success metrics assigned — completing the hypothesis architecture: <em>'We observed X from source Y, and therefore believe if we do Z, we would expect change to metric M.'</em></p>
+    <p>The resulting hypothesis architecture had eight components: insight → source → change → users → action → metrics → lag metrics.</p>
+
+    <p><strong>Layer 2 — Fixing How Experiments Were Decided: Pre-Decision Analysis System</strong></p>
+    <p>As the programme scaled, experiment decision-making had become a bottleneck. Each outcome required bespoke analysis commentary taking <strong>3–5 days per test</strong> — and with hundreds running annually, this created friction.</p>
+    <p>I built a Tableau report pulling page funnel metrics automatically from the data warehouse using experiment IDs. Paired this with a structured Excel-based analysis layer containing pre-built formulas for confidence intervals, margin of error, and guardrail metric checks. Primary, secondary, and guardrail metrics were defined upfront for every test, removing ambiguity from the decision itself.</p>
+    <p>The result: retrospective analysis delays were eliminated. Decisions that took 3–5 days now took under an hour. Beyond speed, this had cultural impact — successful experiments shipped faster, which built momentum and confidence in the programme.</p>
+
+    <p><strong>Layer 3 — Fixing How Knowledge Persisted: AI Infrastructure & Automated Stakeholder Reporting</strong></p>
+    <p>A programme running 300+ annual tests generates significant institutional knowledge — but only if that knowledge remains accessible and stakeholders stay aligned without manual overhead.</p>
+    <p>Built automated workflow system monitoring experiment status and triggering contextually appropriate updates. Stakeholders were alerted when an experiment reached a decision-relevant threshold, not on a schedule.</p>
+    <p>This eliminated the peeking effect (stakeholders reviewing preliminary results before statistical significance) while scaling awareness of experimentation beyond the core CRO team to UX designers and developers building the variants.</p>
+
+    <div class="cs-tools">
+      <span class="cs-tool">Tableau</span>
+      <span class="cs-tool">Excel (statistical formulas)</span>
+      <span class="cs-tool">Power Automate</span>
+      <span class="cs-tool">Azure OpenAI</span>
+      <span class="cs-tool">HTML Reporting</span>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <h2 class="cs-section-title">The Results</h2>
+
+    <div class="cs-results-grid">
+      <div class="cs-result-item">
+        <div class="cs-result-number">+31%</div>
+        <div class="cs-result-desc">Success rate improvement — from better prioritisation, not risk aversion</div>
+      </div>
+      <div class="cs-result-item">
+        <div class="cs-result-number">£1.5m</div>
+        <div class="cs-result-desc">Incremental revenue generated through the programme</div>
+      </div>
+      <div class="cs-result-item">
+        <div class="cs-result-number">20+</div>
+        <div class="cs-result-desc">Stakeholders across 5 squads kept informed automatically</div>
+      </div>
+      <div class="cs-result-item">
+        <div class="cs-result-number">300+</div>
+        <div class="cs-result-desc">Annual tests delivered without proportional overhead increase</div>
+      </div>
+    </div>
+
+    <p>The 31% success rate improvement deserves context. A rising success rate can be a warning sign — it can mean teams are playing it safe. In this case, the improvement came from filtering low-conviction ideas faster, not from avoiding bold hypotheses. The Momentum Framework meant ideas entering the test queue were already evidence-anchored, which increased the probability they'd move metrics when shipped.</p>
+
+    <p>Across 5 product squads, 20+ stakeholders were kept informed automatically. The peeking effect was structurally reduced, protecting statistical integrity. UX and engineering teams were brought into the experimentation feedback loop for the first time — creating a direct connection between the people building solutions and the results those solutions generated.</p>
+  </section>
+
+  <section class="cs-section">
+    <h2 class="cs-section-title">What Made This Work</h2>
+
+    <p>The insight that underpins this work is simple: velocity without foundations creates noise. Foundations without velocity create stagnation. High-performing programmes build both simultaneously.</p>
+
+    <p>The sequencing mattered too. Fixing ideation first (Momentum Framework) meant that the experiments entering the queue were higher quality from the start. That improvement cascaded: better hypotheses → better test design → higher success rates → faster decisions → more capacity to onboard additional squads.</p>
+
+    <p>If I were building this again, I'd instrument learning velocity — the time from experiment conclusion to insight application in future tests. Speed-to-insight is a better leading indicator of programme health than success rate or test volume alone.</p>
+
+    <div class="cs-highlight">
+      <p><strong>Transferable principle:</strong> Experimentation programmes don't fail from lack of tools or talent. They fail from lack of systems. Build the ideation system, the decision system, and the knowledge system — and velocity becomes a compounding asset instead of a coordination tax.</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="cs-cta">
+  <h3>Want to build something similar?</h3>
+  <a href="ahmed-aden.html#booking" class="cs-cta-btn">Book a 30-minute conversation →</a>
+</div>
+
+<div class="cs-related">
+  <h3 class="cs-related-title">Related Case Studies</h3>
+  <a href="case-study-ai-insight-hub.html" class="cs-related-link">
+    <div class="cs-related-link-title">AI-Powered Insight Hub</div>
+    <div class="cs-related-link-desc">Turning scattered knowledge into searchable intelligence layer</div>
+  </a>
+  <a href="case-study-sister-brand.html" class="cs-related-link">
+    <div class="cs-related-link-title">Building CRO Programme From Scratch</div>
+    <div class="cs-related-link-desc">0→1 program design achieving 21% conversion rate increase</div>
+  </a>
+</div>
+
+<footer>
+  <div class="footer-left">Ahmed Aden © 2026</div>
+  <div class="footer-links">
+    <a href="/cdn-cgi/l/email-protection#02635d6366676c3335426a6d766f636b6e2c616d6f">Email</a>
+    <a href="https://linkedin.com/in/ahmedaden" target="_blank">LinkedIn</a>
+    <a href="ahmed-aden.html">Ho
