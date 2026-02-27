@@ -461,15 +461,16 @@
 
   /* About body - two column */
   .about-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 500px;
+    display: flex;
+    flex-direction: column;
   }
 
   .about-story {
     padding: 5rem 4rem;
     background: var(--cream);
-    border-right: 1px solid var(--cream-dark);
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .about-story .section-label {
@@ -493,6 +494,13 @@
   .about-expertise {
     background: var(--cream-dark);
     padding: 5rem 4rem;
+    margin-top: 0;
+    border-top: 1px solid var(--terracotta);
+  }
+
+  .about-expertise-inner {
+    max-width: 760px;
+    margin: 0 auto;
   }
 
   .about-expertise .section-label {
@@ -563,9 +571,42 @@
 
   .expertise-tools {
     font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     color: var(--warm-grey);
     letter-spacing: 0.06em;
+    opacity: 0.85;
+  }
+
+  /* Mid-page CTA strip */
+  .about-cta-strip {
+    background: var(--terracotta);
+    padding: 4rem;
+    text-align: center;
+  }
+
+  .about-cta-strip h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-cta-btn {
+    display: inline-block;
+    background: var(--cream);
+    color: var(--terracotta);
+    padding: 1rem 2.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .about-cta-btn:hover {
+    background: var(--cream-dark);
+    transform: translateY(-2px);
   }
 
   /* About bottom - full width numbers bar */
@@ -1111,8 +1152,8 @@
 
     .about-pullquote { padding: 3rem 2rem; }
     .pullquote-text { font-size: 1.3rem; }
-    .about-body { grid-template-columns: 1fr; }
-    .about-story { padding: 3rem 2rem; border-right: none; border-bottom: 1px solid var(--cream-dark); }
+    .about-body { flex-direction: column; }
+    .about-story { padding: 3rem 2rem; max-width: 100%; }
     .about-expertise { padding: 3rem 2rem; }
     .about-numbers { grid-template-columns: 1fr 1fr; }
     .about-number-item { padding: 2.5rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
@@ -1242,6 +1283,7 @@
     </div>
 
     <div class="about-expertise reveal">
+      <div class="about-expertise-inner">
       <p class="section-label">/ What I Solve</p>
       <div class="expertise-list">
         <div class="expertise-item">
@@ -1286,33 +1328,14 @@
             <div class="expertise-tools">Automated reporting to 20+ stakeholders eliminating peeking effect and manual status-checking overhead</div>
           </div>
         </div>
-      </div>
+      </div><!-- end about-expertise-inner -->
     </div>
   </div>
 
-  <!-- CTA after What I Solve -->
-  <div style="text-align: center; padding: 3rem 4rem 0;">
-    <p style="font-size: 0.9rem; color: var(--charcoal); margin-bottom: 1.5rem;">See the systems in action →</p>
-  </div>
-
-  <!-- Numbers bar -->
-  <div class="about-numbers">
-    <div class="about-number-item reveal">
-      <div class="about-big-number">300+</div>
-      <div class="about-number-desc">Annual experiments (top 10% industry velocity)</div>
-    </div>
-    <div class="about-number-item reveal">
-      <div class="about-big-number">£1.5m</div>
-      <div class="about-number-desc">Incremental revenue attributed to experimentation program</div>
-    </div>
-    <div class="about-number-item reveal">
-      <div class="about-big-number">+31%</div>
-      <div class="about-number-desc">Success rate improvement through smarter prioritization</div>
-    </div>
-    <div class="about-number-item reveal">
-      <div class="about-big-number">7d→20m</div>
-      <div class="about-number-desc">Insight discovery time reduced by AI-powered systems</div>
-    </div>
+  <!-- CTA Strip -->
+  <div class="about-cta-strip">
+    <h3>Ready to see how this applies to your team?</h3>
+    <a href="https://calendly.com/aad3n25/30min" target="_blank" class="about-cta-btn">Book a 30-minute conversation →</a>
   </div>
 
 </section>
@@ -1328,7 +1351,7 @@
   </div>
 
   <div class="work-grid">
-    <a href="#" class="work-card reveal">
+    <a href="case-study-ai-insight-hub.html" class="work-card reveal">
       <div class="card-index">01</div>
       <div class="card-tag">AI Infrastructure</div>
       <h3 class="card-title">AI-Powered Insight Hub</h3>
@@ -1338,7 +1361,7 @@
       <div class="card-link">↗</div>
     </a>
 
-    <a href="#" class="work-card reveal">
+    <a href="case-study-scaling-sykes.html" class="work-card reveal">
       <div class="card-index">02</div>
       <div class="card-tag">Scaling Programs</div>
       <h3 class="card-title">Scaling Experimentation at Sykes</h3>
@@ -1348,7 +1371,7 @@
       <div class="card-link">↗</div>
     </a>
 
-    <a href="#" class="work-card reveal">
+    <a href="case-study-sister-brand.html" class="work-card reveal">
       <div class="card-index">03</div>
       <div class="card-tag">0→1 Programs</div>
       <h3 class="card-title">Built Sister Brand Program From Scratch</h3>
@@ -1358,7 +1381,7 @@
       <div class="card-link">↗</div>
     </a>
 
-    <a href="#" class="work-card reveal">
+    <a href="case-study-intent-analysis.html" class="work-card reveal">
       <div class="card-index">04</div>
       <div class="card-tag">Product Analytics</div>
       <h3 class="card-title">User Intent Analysis → £500k Revenue</h3>
@@ -1381,24 +1404,24 @@
 
     <div class="rec-card reveal">
       <div class="rec-quote">"</div>
-      <p class="rec-text">Ahmed truly stands out with the level of rigour and attention to detail he brings to his work. He doesn't just run experiments—he ensures the strategies behind them are robust, well-documented, and deeply insightful. His communication is equally impressive, always clear, thorough, and easy to understand. Ahmed's ability to balance precision with accessibility has made a real impact on the way we approach CRO.</p>
+      <p class="rec-text">Ahmed is a thoughtful, impact-driven contributor within the CRO team who truly cares about customers. He uses AI and data intelligently to shape decisions, validate ideas, and measure outcomes. On top of that, Ahmed is empathetic, supportive, and a pleasure to work with — someone who elevates both the work and the team around him to create value.</p>
       <div class="rec-author">
-        <div class="rec-avatar">SK</div>
+        <div class="rec-avatar">SC</div>
         <div class="rec-author-info">
-          <div class="rec-name">Steph Kelly</div>
-          <div class="rec-role">Digital Content Manager · LinkedIn</div>
+          <div class="rec-name">Simon Cohen</div>
+          <div class="rec-role">Product Leader · Simon worked with Ahmed on the same team</div>
         </div>
       </div>
     </div>
 
     <div class="rec-card reveal">
       <div class="rec-quote">"</div>
-      <p class="rec-text">I truly have valued Ahmed's wisdom and expertise over the last five years. He brings exceptional analytical and CRO expertise to any team he is on part of and his depth of knowledge provides real value. He is a team player and collaborates well with others in solving complex business problems and is someone I can trust to deliver any task. He always brings his unique combination of skills into his work, someone who valuable asset to have in a team.</p>
+      <p class="rec-text">It has been a pleasure working with Ahmed over the last few years. His analytical skills are second to none and he has always been available when needed. A consummate professional who always has a can-do mentality towards any project.</p>
       <div class="rec-author">
-        <div class="rec-avatar">LB</div>
+        <div class="rec-avatar">DB</div>
         <div class="rec-author-info">
-          <div class="rec-name">Lauren Betteridge</div>
-          <div class="rec-role">Digital Marketing Executive · LinkedIn</div>
+          <div class="rec-name">Duane Barkakoti</div>
+          <div class="rec-role">Performance Marketing Manager · Duane worked with Ahmed on the same team</div>
         </div>
       </div>
     </div>
@@ -1422,7 +1445,7 @@
       <p style="font-size: 0.85rem; opacity: 0.7; margin-top: 1.5rem;">I work with in-house experimentation teams looking to scale velocity while maintaining quality. If that's you, let's talk.</p>
     </div>
     <div class="booking-options reveal">
-      <a href="https://calendly.com/your-link" class="booking-option">
+      <a href="https://calendly.com/aad3n25/30min" target="_blank" class="booking-option">
         <div class="booking-option-left">
           <div class="option-type">30 Minutes</div>
           <div class="option-title">General Conversation</div>
